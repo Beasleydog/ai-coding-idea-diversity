@@ -23,6 +23,7 @@ OUT = ROOT / "results"
 NAVY = "#142D4E"
 TEAL = "#087E8B"
 GRAY = "#536174"
+REPO = "https://github.com/Beasleydog/ai-coding-idea-diversity"
 REFS = [
     ('Anil R. Doshi and Oliver P. Hauser. 2024. Generative AI enhances individual creativity but reduces the collective diversity of novel content. Science Advances 10, 28, eadn5290.', 'https://doi.org/10.1126/sciadv.adn5290'),
     ('GH Archive. n.d. GH Archive: public GitHub timeline and hourly archives. Retrieved October 24, 2026.', 'https://www.gharchive.org/'),
@@ -107,6 +108,8 @@ def flow(width=490):
 
 
 def text_plain(value):
+    value = re.sub(r'<link href="([^"]+)"[^>]*>(.*?)</link>', r'[\2](\1)', value)
+    value = value.replace("<b>", "**").replace("</b>", "**").replace("<br/>", "\n\n")
     return re.sub(r"<[^>]+>", "", value).replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&")
 
 
@@ -154,6 +157,7 @@ def report(data):
     unavailable = sum(d["reason"] == "github_http_404" for d in data["decisions"])
     story.append(Paragraph("Are AI Coding Assistants Homogenizing What Developers Build?", styles["Title"]))
     p("Group 4 | Samuel Schneider, Spencer Caldwell, Hezeki Webb<br/>October 27, 2026 milestone | Draft for team review", small=True)
+    p(f'<link href="{REPO}" color="#087E8B">Code and evidence: github.com/Beasleydog/ai-coding-idea-diversity</link>', small=True)
     h("Executive summary")
     p("AI coding assistants may affect which software ideas people pursue. Easier implementation could broaden the range of projects, while shared suggestions could make projects more alike. Doshi and Hauser [1] found greater similarity among AI-assisted stories; whether software project choices follow that pattern remains an open question.")
     p("<b>We will measure whether the diversity of ideas in newly created public GitHub repositories changed around ChatGPT's release.</b>")
@@ -193,7 +197,9 @@ def report(data):
            ["4. Similarity validation / two reviewers, 50 pairs", "1-5 anchors and 50 blinded pair rows prepared. Human ratings and correlation pending.", "Hezeki"]], [188, 235, 67])
     p("<b>Goal 1.</b> The initial October 27 target was five projects from one month. The pilot now connects archive collection, historical retrieval, filtering and representation across three frames. Saved decisions expose failures. The proposal's representative monthly sample is still a separate task.")
     p("<b>Goal 2.</b> Public records contain ideas, quotes, hashes, historical links, normalized vectors and descriptive sensitivity results. Re-running verification needs no key or paid call. A single-command builder regenerates this five-page report, PDF slides, the result figure and blank reviewer sheets.")
-    p("<b>Goals 3 and 4.</b> REVIEW.md defines categories, summary checks and 1-5 similarity anchors. Blank sheets cover all pilot summaries and 50 pairs. An AI source audit inspected all 15 summaries, flagging two platform inferences and two filter ambiguities (configuration versus software; possible upstream copy). These notes are in the evidence index. Two people must independently review before adjudication. The full-study summary target is 45/50 passing; filter precision/recall must include rejects. No human accuracy or agreement is claimed.")
+    audit_note = ("An AI source audit inspected the final pilot summaries and flagged platform inferences and filter ambiguities (configuration versus software; possible upstream copy). Notes are in the evidence index. "
+                  if data.get("assistant_audit") else "No source audit is recorded for this run. ")
+    p("<b>Goals 3 and 4.</b> REVIEW.md defines categories, summary checks and 1-5 similarity anchors. Blank sheets cover all pilot summaries and up to 50 pairs. " + audit_note + "Two people must independently review before adjudication. The full-study summary target is 45/50 passing; filter precision/recall must include rejects. No human accuracy or agreement is claimed.")
     h("Way forward and schedule")
     table([["When", "Next concrete outcome", "Lead"],
            ["Oct 25-27", "Team checks evidence/AI disclosure, independently reviews pilot summaries and pairs, rehearses 10-minute talk.", "All; Hezeki coordinates reviews"],
@@ -309,7 +315,7 @@ def slides(data):
         "[1] Doshi &amp; Hauser, Science Advances (2024). [2] GH Archive. [3] GitHub commit API. [4] MiniLM model card.",
         "[5] Lopez Bernal et al., IJE (2017). [6] OpenAI, Introducing ChatGPT (2022). [7] Prime Inference. [8] Newey &amp; West (1987).",
         "Full linked references are in the writeup. AI_USE.md records prompts, settings and errors. Codex drafted code/materials; GLM produced classifications, ideas and design advice.",
-        "Team review and acceptance decisions remain pending. Questions?"], "All", "reference slide; Q&A")
+        f'<link href="{REPO}" color="#087E8B">Code, evidence and AI record: Beasleydog/ai-coding-idea-diversity</link><br/>Team review and acceptance decisions remain pending.'], "All", "reference slide; Q&A")
     c.save()
     attach_disclosure(OUT / "Group4_Milestone_Presentation.pdf")
 
@@ -351,13 +357,15 @@ def readme_results(data):
     bound = sum(x["reserved_usd"] for x in data["spend"])
     unavailable = sum(d["reason"] == "github_http_404" for d in data["decisions"])
     invalid = sum(d["reason"] == "invalid_model_output" for d in data["decisions"])
+    audit_note = (f"An AI source audit inspected {len(data['assistant_audit']['records'])} final summaries; "
+                  "its notes and flagged concerns appear in the evidence index. "
+                  if data.get("assistant_audit") else "No AI source audit is recorded for this run. ")
     lines.extend(["", f"**{len(data['records'])} retained projects; {len(data['decisions'])} attempted candidates.** "
                   f"{unavailable} attempts were unavailable (HTTP 404); {invalid} failed model-output checks. "
                   f"All exploratory and final paid calls total approximately **${cost:.4f}** by returned token usage. "
                   f"Conservative reservations, including uncertain calls, total **${bound:.4f}**.", "",
-                  "These numbers describe the selected sets only. An AI source audit inspected all 15 final "
-                  "summaries and flagged two platform inferences and two filtering ambiguities; notes appear "
-                  "in the evidence index. This is not independent human validation. Smaller later scores "
+                  "These numbers describe the selected sets only. " + audit_note +
+                  "This is not independent human validation. Smaller later scores "
                   "in these three frames do not establish a population trend or an AI effect.", "",
                   f"Recorded run: `{data['run_at']}` (UTC). Exact vectors, candidate order, rejections, "
                   "sensitivity results, prompts and token use are in [pilot.json](results/pilot.json).", "",

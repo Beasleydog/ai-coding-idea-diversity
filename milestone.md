@@ -4,17 +4,21 @@ Group 4: Samuel Schneider, Spencer Caldwell, Hezeki Webb
 
 October 27, 2026 milestone; draft for team review.
 
-Group 4 | Samuel Schneider, Spencer Caldwell, Hezeki WebbOctober 27, 2026 milestone | Draft for team review
+Group 4 | Samuel Schneider, Spencer Caldwell, Hezeki Webb
+
+October 27, 2026 milestone | Draft for team review
+
+[Code and evidence: github.com/Beasleydog/ai-coding-idea-diversity](https://github.com/Beasleydog/ai-coding-idea-diversity)
 
 ## Executive summary
 
 AI coding assistants may affect which software ideas people pursue. Easier implementation could broaden the range of projects, while shared suggestions could make projects more alike. Doshi and Hauser [1] found greater similarity among AI-assisted stories; whether software project choices follow that pattern remains an open question.
 
-We will measure whether the diversity of ideas in newly created public GitHub repositories changed around ChatGPT's release.
+**We will measure whether the diversity of ideas in newly created public GitHub repositories changed around ChatGPT's release.**
 
 The proposed study samples 60 months, January 2021 through December 2025, and describes each repository using source material from its first 30 days. Short idea statements become embeddings; mean pairwise cosine distance measures the diversity of each selected set. The eventual analysis estimates level and slope changes from December 2022, the first full month after the November 30 release [6].
 
-We have implemented an end-to-end feasibility pilot with 15 projects across 3 selected months, exceeding the original five-project target. We attempted 413 candidates, retained historical commit links and source hashes, generated evidence-linked statements with GLM 5.3 Flash, and computed MiniLM embeddings and diversity scores. Estimated API cost is $0.0301; conservative reservations total $0.4012, below the $5 limit. The most useful initial result is a measured account of retrieval and filtering failures.
+We have implemented an end-to-end feasibility pilot with **15 projects across 3 selected months**, exceeding the original five-project target. We attempted 413 candidates, retained historical commit links and source hashes, generated evidence-linked statements with GLM 5.3 Flash, and computed MiniLM embeddings and diversity scores. Estimated API cost is $0.0301; conservative reservations total $0.4012, below the $5 limit. The most useful initial result is a measured account of retrieval and filtering failures.
 
 This is a pipeline demonstration, not evidence that AI changed software diversity. The pilot uses one UTC hour per month rather than whole-month samples. Independent human review, full-month sampling and the 60-month regression remain pending.
 
@@ -26,15 +30,15 @@ Implemented: archive -> historical source -> GLM filter/idea -> MiniLM -> divers
 
 ## Proposed solution and implementation
 
-Inputs and sampling. GH Archive supplies public CreateEvents [2]. The pilot downloads January 15, 12:00-12:59 UTC in 2021, 2023 and 2025. We keep repository-creation events, deduplicate IDs, and order candidates by SHA256(seed:repository_id), with seed 448-pilot-v1. Rejections are replaced in that saved order. This is reproducible ordering within each hourly frame, not a random sample of a month. The prepared BigQuery query in sample.sql covers an entire month; it has not been run or billed.
+**Inputs and sampling.** GH Archive supplies public CreateEvents [2]. The pilot downloads January 15, 12:00-12:59 UTC in 2021, 2023 and 2025. We keep repository-creation events, deduplicate IDs, and order candidates by SHA256(seed:repository_id), with seed **448-pilot-v1**. Rejections are replaced in that saved order. This is reproducible ordering within each hourly frame, not a random sample of a month. The prepared BigQuery query in sample.sql covers an entire month; it has not been run or billed.
 
-Historical retrieval. Repository IDs resolve current metadata. We query ancestors of the currently observed default branch with GitHub's until parameter [3], select the returned commit, and require its committer timestamp to fall between creation and creation + 30 days. We recover its tree and README blob, saving the commit, tree and content hashes. This does not recover the historical default-branch name, prove public availability at the cutoff, or detect backdated commits and rewritten history. Imported histories with earlier timestamps are excluded.
+**Historical retrieval.** Repository IDs resolve current metadata. We query ancestors of the currently observed default branch with GitHub's until parameter [3], select the returned commit, and require its committer timestamp to fall between creation and creation + 30 days. We recover its tree and README blob, saving the commit, tree and content hashes. This does not recover the historical default-branch name, prove public availability at the cutoff, or detect backdated commits and rewritten history. Imported histories with earlier timestamps are excluded.
 
-Filtering. Reject forks/mirrors, profile repositories, missing source extensions, truncated trees, absent/short/non-English READMEs, and within-month duplicate retained READMEs. The extension allowlist includes HTML, CSS, SQL and notebooks. READMEs over 200 KB are excluded. English detection is seeded. GLM assigns project, tutorial, coursework, template, not software or unclear; only project passes. Schema failures and non-verbatim evidence quotes are recorded as model failures, never as accepted projects.
+**Filtering.** Reject forks/mirrors, profile repositories, missing source extensions, truncated trees, absent/short/non-English READMEs, and within-month duplicate retained READMEs. The extension allowlist includes HTML, CSS, SQL and notebooks. READMEs over 200 KB are excluded. English detection is seeded. GLM assigns project, tutorial, coursework, template, not software or unclear; only project passes. Schema failures and non-verbatim evidence quotes are recorded as model failures, never as accepted projects.
 
-Representation. Every final extraction request uses the same prompt, temperature 0, low reasoning and 3,072 output-token cap. Input is bounded to 12,000 historical README characters; the file tree supports eligibility checks. We removed paths from model input after diagnostic runs inferred unsupported features from filenames. Identity/URL/date redaction is best effort. The model outputs an idea of at most 80 words and evidence quotes. Full inputs/responses are cached locally; the public index publishes concise quotes, source links and request hashes. Dependency-file retrieval is deferred.
+**Representation.** Every final extraction request uses the same prompt, temperature 0, low reasoning and 3,072 output-token cap. Input is bounded to 12,000 historical README characters; the file tree supports eligibility checks. We removed paths from model input after diagnostic runs inferred unsupported features from filenames. Identity/URL/date redaction is best effort. The model outputs an idea of at most 80 words and evidence quotes. Full inputs/responses are cached locally; the public index publishes concise quotes, source links and request hashes. Dependency-file retrieval is deferred.
 
-Measurement and outputs. all-MiniLM-L6-v2 [4], pinned to one model revision, produces normalized 384-dimensional vectors. For n vectors, diversity = n/(n-1) * (1 - squared norm of their mean). Offline tests check this formula against explicit pairwise distances. We also compute leave-one-out ranges, a cleaned README-prefix baseline, AI-topic exclusion and within-month owner deduplication. MiniLM truncates long inputs at its 256 word-piece limit; the README baseline is therefore a prefix check. No repository code is executed.
+**Measurement and outputs.** all-MiniLM-L6-v2 [4], pinned to one model revision, produces normalized 384-dimensional vectors. For n vectors, diversity = n/(n-1) * (1 - squared norm of their mean). Offline tests check this formula against explicit pairwise distances. We also compute leave-one-out ranges, a cleaned README-prefix baseline, AI-topic exclusion and within-month owner deduplication. MiniLM truncates long inputs at its 256 word-piece limit; the README baseline is therefore a prefix check. No repository code is executed.
 
 
 
@@ -50,9 +54,13 @@ Across these frames, 192/413 attempts returned HTTP 404 (unavailable; deletion a
 
 Higher distance means greater spread among these retained ideas. The values are descriptive; three sparse hourly samples cannot support a temporal trend, a before/after significance test or causal attribution. README and idea scores measure different representations and are not interchangeable. Stored bootstrap intervals condition on the selected projects; they are not confidence intervals for monthly populations.
 
-Example, R01. A web application that clones Instagram functionality, displaying posts and user profiles. Built as a Django app intended for deployment on Heroku.Evidence: displays posts and profiles of different usersInspect the historical README at the recorded commit.
+**Example, R01.** A web application that clones Instagram functionality, displaying posts and user profiles. Built as a Django app intended for deployment on Heroku.
 
-Main threats. Accessibility and documentation select the sample; language and extension rules exclude some software; model errors can differ over time; summaries may preserve implementation style or hallucinate purpose. Current-branch ancestry is an imperfect historical reconstruction. Future models may know these repositories, so redaction does not guarantee blindness. Broader changes in GitHub users and projects can explain any eventual trend.
+**Evidence:** displays posts and profiles of different users
+
+[Inspect the historical README at the recorded commit](https://github.com/ZephonMakale/Zeph-Insty/blob/6138c5cc2944065967587bf8ae718f5a53f3004e/README.md).
+
+**Main threats.** Accessibility and documentation select the sample; language and extension rules exclude some software; model errors can differ over time; summaries may preserve implementation style or hallucinate purpose. Current-branch ancestry is an imperfect historical reconstruction. Future models may know these repositories, so redaction does not guarantee blindness. Broader changes in GitHub users and projects can explain any eventual trend.
 
 
 
@@ -65,11 +73,11 @@ Main threats. Accessibility and documentation select the sample; language and ex
 | 3. Summary validation / two reviewers, 50 summaries | Rubric and pilot worksheets prepared; automated evidence checks run. Independent human review pending. | Hezeki |
 | 4. Similarity validation / two reviewers, 50 pairs | 1-5 anchors and 50 blinded pair rows prepared. Human ratings and correlation pending. | Hezeki |
 
-Goal 1. The initial October 27 target was five projects from one month. The pilot now connects archive collection, historical retrieval, filtering and representation across three frames. Saved decisions expose failures. The proposal's representative monthly sample is still a separate task.
+**Goal 1.** The initial October 27 target was five projects from one month. The pilot now connects archive collection, historical retrieval, filtering and representation across three frames. Saved decisions expose failures. The proposal's representative monthly sample is still a separate task.
 
-Goal 2. Public records contain ideas, quotes, hashes, historical links, normalized vectors and descriptive sensitivity results. Re-running verification needs no key or paid call. A single-command builder regenerates this five-page report, PDF slides, the result figure and blank reviewer sheets.
+**Goal 2.** Public records contain ideas, quotes, hashes, historical links, normalized vectors and descriptive sensitivity results. Re-running verification needs no key or paid call. A single-command builder regenerates this five-page report, PDF slides, the result figure and blank reviewer sheets.
 
-Goals 3 and 4. REVIEW.md defines categories, summary checks and 1-5 similarity anchors. Blank sheets cover all pilot summaries and 50 pairs. An AI source audit inspected all 15 summaries, flagging two platform inferences and two filter ambiguities (configuration versus software; possible upstream copy). These notes are in the evidence index. Two people must independently review before adjudication. The full-study summary target is 45/50 passing; filter precision/recall must include rejects. No human accuracy or agreement is claimed.
+**Goals 3 and 4.** REVIEW.md defines categories, summary checks and 1-5 similarity anchors. Blank sheets cover all pilot summaries and up to 50 pairs. An AI source audit inspected the final pilot summaries and flagged platform inferences and filter ambiguities (configuration versus software; possible upstream copy). Notes are in the evidence index. Two people must independently review before adjudication. The full-study summary target is 45/50 passing; filter precision/recall must include rejects. No human accuracy or agreement is claimed.
 
 ## Way forward and schedule
 
@@ -86,21 +94,21 @@ Goals 3 and 4. REVIEW.md defines categories, summary checks and 1-5 similarity a
 
 After representative monthly collection and human checks, fit a segmented time-series model [5] to 60 monthly scores: linear time, post-December-2022 indicator, time since that breakpoint, and annual sine/cosine terms. Report level and slope changes with Newey-West [8] 95% intervals and diagnose autocorrelation. Repeat without AI-topic projects, with one repository per owner across the study, and using cleaned README embeddings. These full-study checks have not been completed. The pilot owner check is within each month only.
 
-[1] Anil R. Doshi and Oliver P. Hauser. 2024. Generative AI enhances individual creativity but reduces the collective diversity of novel content. Science Advances 10, 28, eadn5290. https://doi.org/10.1126/sciadv.adn5290
+[1] Anil R. Doshi and Oliver P. Hauser. 2024. Generative AI enhances individual creativity but reduces the collective diversity of novel content. Science Advances 10, 28, eadn5290. [https://doi.org/10.1126/sciadv.adn5290](https://doi.org/10.1126/sciadv.adn5290)
 
-[2] GH Archive. n.d. GH Archive: public GitHub timeline and hourly archives. Retrieved October 24, 2026. https://www.gharchive.org/
+[2] GH Archive. n.d. GH Archive: public GitHub timeline and hourly archives. Retrieved October 24, 2026. [https://www.gharchive.org/](https://www.gharchive.org/)
 
-[3] GitHub. n.d. REST API endpoints for commits. Retrieved October 24, 2026. https://docs.github.com/en/rest/commits/commits#list-commits
+[3] GitHub. n.d. REST API endpoints for commits. Retrieved October 24, 2026. [https://docs.github.com/en/rest/commits/commits#list-commits](https://docs.github.com/en/rest/commits/commits#list-commits)
 
-[4] Sentence Transformers. n.d. all-MiniLM-L6-v2 model card. Retrieved October 24, 2026. https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+[4] Sentence Transformers. n.d. all-MiniLM-L6-v2 model card. Retrieved October 24, 2026. [https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
 
-[5] James Lopez Bernal, Steven Cummins, and Antonio Gasparrini. 2017. Interrupted time series regression for the evaluation of public health interventions: a tutorial. International Journal of Epidemiology 46, 1, 348-355. https://doi.org/10.1093/ije/dyw098
+[5] James Lopez Bernal, Steven Cummins, and Antonio Gasparrini. 2017. Interrupted time series regression for the evaluation of public health interventions: a tutorial. International Journal of Epidemiology 46, 1, 348-355. [https://doi.org/10.1093/ije/dyw098](https://doi.org/10.1093/ije/dyw098)
 
-[6] OpenAI. 2022. Introducing ChatGPT. November 30, 2022. https://openai.com/index/chatgpt/
+[6] OpenAI. 2022. Introducing ChatGPT. November 30, 2022. [https://openai.com/index/chatgpt/](https://openai.com/index/chatgpt/)
 
-[7] Prime Intellect. n.d. Prime Inference; live model catalog and pricing. Retrieved October 24, 2026. https://docs.primeintellect.ai/inference/overview
+[7] Prime Intellect. n.d. Prime Inference; live model catalog and pricing. Retrieved October 24, 2026. [https://docs.primeintellect.ai/inference/overview](https://docs.primeintellect.ai/inference/overview)
 
-[8] Whitney K. Newey and Kenneth D. West. 1987. A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix. Econometrica 55, 3, 703-708. https://doi.org/10.2307/1913610
+[8] Whitney K. Newey and Kenneth D. West. 1987. A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix. Econometrica 55, 3, 703-708. [https://doi.org/10.2307/1913610](https://doi.org/10.2307/1913610)
 
 ## Generative AI use and submission checks
 

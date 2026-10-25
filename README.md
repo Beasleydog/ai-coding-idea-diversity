@@ -56,7 +56,7 @@ vectors. Review forms contain no fabricated human ratings.
 
 **15 retained projects; 413 attempted candidates.** 192 attempts were unavailable (HTTP 404); 4 failed model-output checks. All exploratory and final paid calls total approximately **$0.0301** by returned token usage. Conservative reservations, including uncertain calls, total **$0.4012**.
 
-These numbers describe the selected sets only. An AI source audit inspected all 15 final summaries and flagged two platform inferences and two filtering ambiguities; notes appear in the evidence index. This is not independent human validation. Smaller later scores in these three frames do not establish a population trend or an AI effect.
+These numbers describe the selected sets only. An AI source audit inspected 15 final summaries; its notes and flagged concerns appear in the evidence index. This is not independent human validation. Smaller later scores in these three frames do not establish a population trend or an AI effect.
 
 Recorded run: `2026-10-25T01:08:40.583500Z` (UTC). Exact vectors, candidate order, rejections, sensitivity results, prompts and token use are in [pilot.json](results/pilot.json).
 
