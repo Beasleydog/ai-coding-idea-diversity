@@ -1,0 +1,21 @@
+[project]
+name = "repository-idea-diversity"
+version = "0.1.0"
+description = "Historical GitHub repository idea-diversity feasibility pilot"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "requests==2.32.3",
+    "numpy==1.26.4",
+    "langdetect==1.0.9",
+    "sentence-transformers==5.3.0",
+    "matplotlib==3.9.2",
+    "reportlab==4.4.10",
+    "PyMuPDF==1.27.2.3",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["pilot"]
