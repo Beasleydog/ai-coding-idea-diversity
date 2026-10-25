@@ -1,5 +1,12 @@
 # Generative AI use record
 
+Scope correction: the user requested code only. The generated report and
+presentation were removed, and the original writeup, requirements and figures
+were restored. Document-generation code and dependencies were removed. The
+retained work is the research pipeline, pilot observations, tests and supporting
+technical documentation. Historical descriptions below record what occurred,
+including the out-of-scope work that was reverted.
+
 This record accompanies the milestone drafts. **Independent team review and the
 team's acceptance/rejection decisions are pending.** Nothing here claims a named
 teammate wrote, checked or approved an AI output.
@@ -29,6 +36,8 @@ documents this work session; it does not reconstruct missing earlier prompts.
 > undesrtand my project. make good progress on it, maybe run a pilot or smthn idfk. give me enough for the milestone 27th, i dont wanna maek my teamates do it. in this directory /c/Users/beasl/.stuff/fun/remotiontesting my env has a prime api key,i  give you permission to copy it ove rto this project and then use it here. don't spend more than 5 bucks. use glm 5.3 flash model for idea generation. keep everything isolated to this folder. make the code as ultra cleana nd minimal as possible, don't make a shit ton of junk files, the repo should be PRISTINE. once you have it in a good spot i give you permission to make a public git repo and push it to my github. make sure not to leak api key. make the read me ultra clear and precise showing what has been done so far, ideally with links to proof for things but not required. be safe and have fun!
 
 > tbc i think you can go further than the october 27 target, have fun and try to make good progress. i would be impressed if you could get a good first pass! but, before doing that, we must have super strong results for the october 27. you can maybe lsightly expand october 27 scope if you want
+
+> bro i dnot want you to touch the writeup or the presentation, i just want the code side
 
 The directory path identifies the authorized credential source. The credential
 itself is not part of any model prompt or public file.

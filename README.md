@@ -8,18 +8,14 @@ not evidence of an AI effect.** Independent human validation is pending.
 
 ## Start here
 
-- [Milestone writeup (PDF)](results/Group4_Milestone_Writeup.pdf)
-- [Ten-minute presentation (PDF)](results/Group4_Milestone_Presentation.pdf)
-- [Readable report source](milestone.md)
-- [Historical repository evidence](results/EVIDENCE.md)
-- [Machine-readable observations, vectors, decisions and spend](results/pilot.json)
-- [Review protocol](REVIEW.md) and [AI-use disclosure](AI_USE.md)
+This repository contains the code and empirical pilot. Existing course writeup,
+requirements and figures are preserved locally and excluded from code exports.
 
-The PDFs are drafts for team review. Each PDF also embeds `AI_USE.md` as a file
-attachment; the readable disclosure is linked above. The report and slides are generated from the
-saved observations; no measured value is hand-entered into a PDF. Submission is
-**October 27, 2026, before 8:59 AM America/New_York**. Each member must speak in the
-presentation. Slide footers give a suggested speaker and time allocation.
+- [Runner](pilot.py) and [offline tests](test_pilot.py)
+- [Historical repository evidence](results/EVIDENCE.md)
+- [Observations, embeddings, decisions and spend](results/pilot.json)
+- [Diagnostic plot](results/pilot.png)
+- [Review protocol](REVIEW.md) and [AI-use record](AI_USE.md)
 
 ## What works
 
@@ -97,14 +93,14 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --cache-dir .cache/pip .
 .\.venv\Scripts\python.exe -m unittest -v
 .\.venv\Scripts\python.exe pilot.py verify
-.\.venv\Scripts\python.exe build.py
+.\.venv\Scripts\python.exe export.py
 ```
 
-Tests and `verify` need no key or network. `build.py` rebuilds the PDFs, chart,
-evidence index and **blank** review sheets from saved results. Keep filled reviewer
-copies under `.cache/`; rebuilding intentionally leaves the published templates
-blank. `build.py` also regenerates `milestone.md`; edit its report text in the
-builder when revising the report. Installing dependencies requires network access.
+Tests and `verify` need no key or network. `export.py` rebuilds only the pilot
+chart, evidence index and **blank** validation worksheets from saved results.
+Keep filled reviewer copies under `.cache/`; exports leave the published templates
+blank. Installing dependencies requires network access. No command edits the
+course writeup, figures or presentation.
 
 To recollect the pilot, put **only** `PRIME_API_KEY=your_key` in the ignored `.env`
 file or use a local copy you already have. Set `GITHUB_TOKEN` or `GH_TOKEN` in your
@@ -116,7 +112,7 @@ existing WSL `gh` login. GitHub tokens are never copied into `.env` or results.
 .\.venv\Scripts\python.exe pilot.py analyze
 .\.venv\Scripts\python.exe pilot.py advise
 .\.venv\Scripts\python.exe pilot.py verify
-.\.venv\Scripts\python.exe build.py
+.\.venv\Scripts\python.exe export.py
 ```
 
 `collect` replaces the public run manifest; `analyze` must follow it. `advise` asks
@@ -156,13 +152,13 @@ concise source excerpts, provenance and vectors, not full third-party repositori
    interrupted time series with confidence intervals and full-study robustness.
 
 The pipeline intentionally has no causal or regression result to report yet.
-The inherited course instructions and earlier design draft are preserved locally
-in `.cache/original/`; they are not dependencies or generated study results.
+The original course writeup, requirements and figures are restored at their
+original paths and ignored by Git. Backups remain in `.cache/original/`.
 
 ## Files
 
 `pilot.py` is the collection/measurement runner; `test_pilot.py` checks its critical
-invariants; `build.py` generates deliverables. `results/pilot.json` is the source of
+invariants; `export.py` exports research evidence and diagnostics. `results/pilot.json` is the source of
 truth for measurements. `REVIEW.md`, `AI_USE.md`, `sample.sql` and `pyproject.toml`
 hold the review protocol, AI record, next-stage query and dependencies. There is no
 web app, database server or notebook layer.

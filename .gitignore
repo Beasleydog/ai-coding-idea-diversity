@@ -27,3 +27,10 @@ data/cache/
 Thumbs.db
 .vscode/
 .idea/
+
+# Existing course materials: preserve locally; code tooling must not edit these.
+/milestone.md
+/requirements.txt
+/eq_diversity.*
+/eq_trend.*
+/figure1_system_plan.*
