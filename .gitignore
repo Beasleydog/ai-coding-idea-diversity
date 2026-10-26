@@ -1,36 +1,7 @@
-# Secrets (GitHub token, LLM and BigQuery credentials)
 .env
-.env.*
-*.pem
-*credentials*.json
-*service-account*.json
-
-# Python
-__pycache__/
-*.py[cod]
 .venv/
-.cache/
-*.tmp
-*.egg-info/
-venv/
-.ipynb_checkpoints/
-.pytest_cache/
-
-# Retrieved repositories, cached LLM outputs, embeddings
-data/raw/
-data/cache/
-*.parquet
-*.npy
-
-# OS / editor
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-
-# Existing course materials: preserve locally; code tooling must not edit these.
-/milestone.md
-/requirements.txt
-/eq_diversity.*
-/eq_trend.*
-/figure1_system_plan.*
+__pycache__/
+*.pyc
+data/*.sqlite*
+data/.lock
+outputs/

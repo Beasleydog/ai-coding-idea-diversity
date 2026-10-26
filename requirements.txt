@@ -1,0 +1,130 @@
+Project Milestones
+Total Points: 65
+Materials Due: October 27, 2026 (before class, 8:59 AM)
+Presentations: October 27 and 29, 2026
+
+Schedule (randomly allocated):
+Date
+Group
+Members
+Tuesday 10/27
+1
+Michael, Nathan, Brian, Diya
+3
+Eric, Ismael, Kirill, Shaoyang
+4
+Spencer, Sam, Hezeki
+Thursday 10/29
+3
+Yifan, Dillon, Yuchen, Jiaqi
+5
+Renee, Lyra, Ana
+6
+Angelina, Arisha, Patrick
+
+
+Overview
+The milestone presentation and document is to be handed in electronically in the form of a PDF file (one for the milestone, one for the written report).
+
+This presentation will provide a check-in regarding progress on the project. This is an opportunity to clarify what is working and what issues you are facing. It is another opportunity for feedback, including from your classmates! You will be asked to submit a survey providing a peer review of the other groups’ presentations. Submitted materials will be made available to your classmates. 
+Milestone Presentation (30 points)
+The presentation will occur during class on October 27 or 29, following the schedule above. Include a PDF of your presentations with your written report (due October 27 before class). If for some reason you cannot make your team’s live presentation, you will need to individually arrange a time to present to the instructors, and we will ask you questions then.
+
+You will prepare a 10 minute presentation, ensuring each group member speaks for part of the time. You will present this in class, as well as upload a PDF of the presentation with your written assignment. All members of your group are expected to attend your presentation, participate in both the presentation and the Q&A, and to be present for other groups' presentations on both days.
+
+The presentation will be 10 minutes, with 10 minutes for Q&A and transitioning between groups. The goal of the presentation, much like the document itself, is to provide an update on your progress and plans moving forward. The other students observing your talk will fill out a document to provide feedback, much in line with the style of feedback that you received for the proposal itself.
+Description
+The presentation should cover the following topics:
+
+Executive summary: what problem are you solving? (5 points)
+Proposed solution and implementation: describe your chosen solution (10 points)
+Milestones: describe the components of your deliverable. Include the same components as you outlined in your project proposal. Include any additional ones that you have added. Explain your progress on each component. (10 points)
+Way forward and schedule: update your project plan (5 points)
+
+When explaining your system, make sure to include drawings/sketches/diagrams that clarify how data flows through your system. Include a diagram outlining your system plan for the entire project and highlight the components that are addressed in Milestone 1.
+
+Feel free to use text that you used in your project proposal. It would be advisable to incorporate feedback that you received from your project proposal.
+Milestone Write-up (35 points)
+This write-up will provide a check-in regarding progress on the project. This is an opportunity to clarify what is working and what issues you are facing. It is another opportunity for feedback!
+
+Your group will write an updated description of your project. The write-up should be no more than five pages, though it can be shorter. Don’t just try to fill space. Keep your writing on-point and concise. Short declarative statements are the key!
+
+When explaining your system, make sure to include drawings/sketches/diagrams that clarify how data flows through your system. Include a diagram outlining your system plan for the entire project and highlight the components that are addressed in Milestone 1.
+
+Feel free to use text that you used in your project proposal. It would be advisable to incorporate feedback that you received from your project proposal.
+
+Your milestone report should include all sections listed below:
+Executive Summary (5 points)
+The executive summary provides an overview of your report. It describes the problem being solved, why it is important, and how you plan on solving it. It will be between one-third and two-thirds of a page. It should be read as a “pitch”, endorsing the problem and your solution. However, it should stick to the facts. There should be a single sentence that summarizes the project objective. Write this sentence in bold. 
+Proposed Solution and Implementation (10 points)
+Provide an overview of your solution. Address the comments and feedback that you received in the project proposal. This is the time to really formalize your approach! Note that a high-level drawing is almost always useful. You should discuss the major components of your design. This section should be detailed. 
+
+Address the following points:
+
+What are the inputs and outputs to your system?
+How does information flow through your system (input/output of each module)?
+What is your feature extraction and modeling approach?
+Milestones (10 points)
+This section should outline the status of your milestone deliverables. For each milestone, write your intended plan (from the project proposal) and the status of each component. Use the table format (below) to introduce the milestone. Then include short subsections for each milestone goal to clarify how/what you have done for that milestone. We show four goals here. The number of goals is group dependent. 
+
+Milestone
+Status
+Group Member Lead
+Goal 1
+
+
+
+
+Goal 2
+
+
+
+
+Goal 3
+
+
+
+
+Goal 4
+
+
+
+
+
+
+Milestone subsections:
+
+Goal 1: Clarify how/what you have done for this goal.
+Goal 2: Clarify how/what you have done for this goal.
+Goal 3: Clarify how/what you have done for this goal.
+Goal 4: Clarify how/what you have done for this goal.
+Way Forward and Schedule (5 points)
+Update your timeline with your current progress. Make sure to clearly identify who is responsible for each component. The assignments can change from the proposal.
+In-text Citations and References (5 points)
+Your proposal should have in-text citations and a references section at the end, for all academic and non-academic citations. You should use in-text citations, with a reference if:
+
+There is research or an article that motivates what you are doing.
+To describe what research has been done in the past, and how that research inspires what you are doing or is justification for a method you are using.
+Any paper that provides the theory or empirical framing for your work (e.g., “Social media post velocity is associated with poor sleep [X].”)
+
+Please use the ACM style reference format for both your in-text citations and references section. I recommend using tools like Zotero, where you can create a project library for your group to save papers, and there are Chrome / Overleaf / Word extensions that allow easy import of in-text citations and bibliography creation.
+Submission
+You will be asked to turn in your milestone writeup and presentation materials on Gradescope by 8:59 AM on Tuesday, October 27. Please turn in your materials using the following filenames:
+
+Writeup: Groupx_Milestone_Writeup.pdf
+Presentation: Groupx_Milestone_Presentation.pdf.
+If you are demo’ing materials, you can submit a zip file instead of a pdf containing all of your materials: Groupx_Milestone_Presentation.zip
+
+“x” should be replaced with your group number, listed in the table at the top of this document.
+Generative AI Policy
+Learning to use AI tools is important for all of us.  When used properly, these tools can enhance our work; when used improperly, it can border on plagiarism, or simply be incorrect. If you have used AI on anything you submit for EECS 448, please include an explanation as to: (1) state which model you used; (2) include the prompt(s) that you gave the model; (3) explain your reasoning as to why you agree (or disagree) with the response; (4) mention any incorrect responses or erroneous behavior that you may have seen. An example of how to document generative AI responses is linked.
+
+Any use of generative AI models without this documentation will be treated as an honor code violation.
+
+Things we look for to detect AI use:
+
+Vague terminology that sounds professional but do not have meaning
+Undefined terms that require a definition to understand
+We pay attention to the ways in which code is documented – tools like Claude and Codex have a specific form of documentation
+
+If you have used AI, document your use, and there will not be any problems! If you use AI for writing, I highly recommend taking the generated language and rephrasing it to be in your own voice, and ensuring all terminology is understandable (I do this for all of my AI-generated or AI-supported writing!). Make sure everything you state is defensible – as you saw in the pre-proposal, we will take off points if things are claimed, not cited, or terminology is used that does not make sense.
